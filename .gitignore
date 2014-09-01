@@ -1,4 +1,5 @@
 .DS_Store
+*.lock
 *.gem
 *.rbc
 .bundle
