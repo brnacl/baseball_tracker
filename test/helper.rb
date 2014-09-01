@@ -8,7 +8,8 @@ class BaseballTest < MiniTest::Unit::TestCase
   end
 
   def teardown
-    
+    Player.destroy_all
+    BattingStat.destroy_all
   end
 
   def assert_command_output expected, command
