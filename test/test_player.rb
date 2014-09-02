@@ -13,23 +13,11 @@ class TestPlayer < BaseballTest
     assert_equal 3, Player.count
   end
 
-  def test_player_id
+  def test_hash
     player = Player.new(player_id: "aaronha01", birth_year: 1934, first_name: "Hank", last_name: "Aaron")
     assert_equal("aaronha01", player.player_id)
-  end
-
-  def test_birth_year
-    player = Player.new(player_id: "aaronha01", birth_year: 1934, first_name: "Hank", last_name: "Aaron")
     assert_equal(1934, player.birth_year)
-  end
-
-  def test_first_name
-    player = Player.new(player_id: "aaronha01", birth_year: 1934, first_name: "Hank", last_name: "Aaron")
     assert_equal("Hank", player.first_name)
-  end
-
-  def test_last_name
-    player = Player.new(player_id: "aaronha01", birth_year: 1934, first_name: "Hank", last_name: "Aaron")
     assert_equal("Aaron", player.last_name)
   end
 
