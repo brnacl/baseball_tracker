@@ -5,7 +5,7 @@ def clear_screen
 end
 
 def header_main
-  clear_screen
+  # clear_screen
   artii = Artii::Base.new :font => 'slant'
   header = artii.asciify("baseball_STATS")
   header << "\n"
