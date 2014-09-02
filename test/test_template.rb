@@ -64,4 +64,32 @@ class TestTemplate < BaseballTest
         assert_in_output out.string, "IMPORT BATTING STATS", "EXIT"
     end
 
+    def test_import_players_header
+        out = capture_stdout do
+          @template.header_import_players
+        end
+        assert_in_output out.string, "player_id, birth_year, first_name, last_name", "Enter the full path to the file"
+    end
+
+    def test_import_stats_header
+        out = capture_stdout do
+          @template.header_import_stats
+        end
+        assert_in_output out.string, "player_id, year, league, team, games, at_bats, runs_scored, hits, doubles, triples, home_runs, runs_batted_in, stolen_bases, caught_stealing", "Enter the full path to the file"
+    end
+
+    def test_message_file_not_found
+        out = capture_stdout do
+          @template.message_file_not_found
+        end
+        assert_in_output out.string, "FILE NOT FOUND"
+    end
+
+    def test_message_import_success
+        out = capture_stdout do
+          @template.message_import_success
+        end
+        assert_in_output out.string, "FILE IMPORTED SUCCESSFULLY", "EXIT"
+    end
+
 end

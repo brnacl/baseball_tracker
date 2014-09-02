@@ -82,7 +82,7 @@ class Template
   end
 
   def message_import_success
-    message = yellow("FILE SUCCESSFULLY IMPORTED!\n")
+    message = yellow("FILE IMPORTED SUCCESSFULLY!\n")
     message << "Please '" + red("EXIT") + "'" 
     puts message
   end
