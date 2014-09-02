@@ -86,4 +86,12 @@ class Template
     message << "Please '" + red("EXIT") + "'" 
     puts message
   end
+
+  def most_improved player, year1, year2
+    puts green("MOST IMPROVED PLAYER\n")
+    puts "\s\s\sName: #{player.first_name} #{player.last_name}"
+    puts "\s\s\s#{year1} Average: #{player.batting_average(year1.to_i)}"
+    puts "\s\s\s#{year2} Average: #{player.batting_average(year2.to_i)}"
+    puts "\s\s\sImprovement: #{player.improvement(year1.to_i, year2.to_i)}\n\n"
+  end
 end
