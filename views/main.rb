@@ -13,12 +13,6 @@ def header_main
   puts blue(header)
 end
 
-def menu_main
-  menu = "\nMAIN MENU > "
-  menu << red("0")+"(Quit)\n\n"
-  puts menu
-end
-
 def colorize(text, color_code)
   "\e[#{color_code}m#{text}\e[0m"
 end

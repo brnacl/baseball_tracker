@@ -10,7 +10,7 @@ Environment.environment = "production"
 Environment.connect_to_database
 
 command = ""
-until command == "0"
+until command == 0
   header_main
   menu_main
   command = gets.to_i
