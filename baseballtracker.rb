@@ -1,6 +1,4 @@
 #!/usr/bin/env ruby
-
-require 'csv'
 require_relative 'lib/environment'
 
 Dir["lib/*.rb"].each {|file| require_relative file }

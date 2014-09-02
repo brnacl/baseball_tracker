@@ -1,3 +1,5 @@
+require 'csv'
+
 class Controller
 
   def initialize template
@@ -36,6 +38,7 @@ class Controller
       end
       if num_entries > 0
         if File.file?(input)
+          file_import(input, type)
           @template.message_import_success
         else
           @template.message_file_not_found
@@ -43,6 +46,22 @@ class Controller
       end
       input = gets.chomp
       num_entries += 1
+    end
+  end
+
+  def file_import path, type
+    csv_text = File.read(path)
+    csv = CSV.parse(csv_text, :headers => true)
+    if type == 'players'
+      csv.each do |row|        
+        Player.create!(row.to_hash)
+        print "."
+      end
+    elsif type == 'stats'
+      csv.each do |row|
+        BattingStat.create!(row.to_hash)
+        print "."
+      end
     end
   end
 
