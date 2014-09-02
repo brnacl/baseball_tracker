@@ -20,11 +20,31 @@ class TestOutput < BaseballTest
     end
 
     def test_main_menu_includes_quit
-        out = capture_stdout do 
-          header_main
+        out = capture_stdout do
           menu_main
         end
         assert_in_output out.string, "MAIN MENU", "Quit"
+    end
+
+    def test_main_menu
+        out = capture_stdout do
+          menu_main
+        end
+        assert_in_output out.string, "MAIN MENU", "Get Most Improved Batting Average", "Get Team Slugging Percentage", "Import Player Data", "Import Batting Stats"
+    end
+
+    def test_import_players_menu
+        out = capture_stdout do
+          menu_import_players
+        end
+        assert_in_output out.string, "IMPORT PLAYERS", "EXIT"
+    end
+
+    def test_import_batting_stats_menu
+        out = capture_stdout do
+          menu_import_stats
+        end
+        assert_in_output out.string, "IMPORT BATTING STATS", "EXIT"
     end
 
 end

@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'csv'
 require_relative 'lib/environment'
 
 Dir["lib/*.rb"].each {|file| require_relative file }
@@ -9,31 +10,25 @@ Dir["models/*.rb"].each {|file| require_relative file }
 Environment.environment = "production"
 Environment.connect_to_database
 
+
+template = Template.new
+controller = Controller.new(template)
+
 command = ""
 until command == 0
-  header_main
-  menu_main
+  template.header_main
+  template.menu_main
   command = gets.to_i
   case command
   when 1
-    header_main
-    menu_improved_average
+    controller.get_improved_average
   when 2
-    header_main
-    menu_slugging_percentage
+    controller.get_slugging_percentage
   when 3
-    input = ""
-    until input.upcase == "CANCEL"
-      header_main
-      menu_import_players
-      input = gets.chomp  
-    end
+    controller.import_csv "players"
   when 4
-    input = ""
-    until input == "cancel"
-      header_main
-      menu_import_stats
-    end
+    controller.import_csv "stats"
   end
 end
-clear_screen
+
+template.clear_screen
