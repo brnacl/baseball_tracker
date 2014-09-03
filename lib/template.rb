@@ -6,6 +6,10 @@ class Template
     puts "\e[H\e[2J"
   end
 
+  def exit_message
+    "Type #{red('EXIT')} to go back"
+  end
+
   def header_main
     clear_screen
     artii = Artii::Base.new :font => 'slant'
@@ -42,7 +46,7 @@ class Template
     menu = "\nGET MOST IMPROVED AVERAGE > "
     menu << exit_message
     menu << "\n\n"
-    menu << green("Enter Year Range Between 2007 & 2012 (#{purple('YYYY, YYYY')}#{green('):')}")
+    menu << green("Enter Year Range Between 2007 & 2012 (#{purple('2007, 2012')}#{green('):')}")
     puts menu
   end
 
@@ -50,6 +54,7 @@ class Template
     menu = "\nGET SLUGGING PERCENTAGE > "
     menu << exit_message
     menu << "\n\n"
+    menu << green("Enter TeamID and Year (#{purple('OAK, 2007')}#{green('):')}")
     puts menu
   end
 
@@ -101,7 +106,11 @@ class Template
     puts exit_message
   end
 
-  def exit_message
-    "Type #{red('EXIT')} to go back"
+  def message_slugging_percentage_success percentage, teamID, year
+    puts green("SLUGGING PERCENTAGE CALCULATED!\n")
+    puts "\s\s\sTeam ID: #{teamID}"
+    puts "\s\s\s#{year} Percentage: #{percentage}%\n\n"
+    puts exit_message
   end
+
 end

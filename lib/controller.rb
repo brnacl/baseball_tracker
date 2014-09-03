@@ -18,10 +18,14 @@ class Controller
           y.chomp!
           y.lstrip!
         }
-        if years.count == 2 && years[0].to_i >= 2007 && years[1].to_i > 2007
-          player = most_improved_player(years[0].to_i, years[1].to_i)
-          @template.message_most_improved_success(player, years[0], years[1])
-          input = gets.chomp
+        if years.count == 2 && years[0].to_i.between?(2007,2012) && years[1].to_i.between?(2007,2012)
+          year1 = years[0].to_i
+          year2 = years[1].to_i
+          player = most_improved_player(year1, year2)
+          if player 
+            @template.message_most_improved_success(player, year1, year2)
+            input = gets.chomp
+          end
         end
       end
     end
@@ -47,6 +51,40 @@ class Controller
       @template.header_main
       @template.menu_slugging_percentage
       input = gets.chomp
+      if input.include?(",")
+        params = input.split(",")
+        params.each {|p|
+          p.chomp!
+          p.lstrip!
+        }
+        if params.count == 2 && params[0].length == 3 && params[1].to_i.between?(2007,2012)
+          teamID = params[0]
+          year = params[1].to_i
+          percentage = team_slugging_percentage(teamID, year)
+          if percentage
+            @template.message_slugging_percentage_success(percentage, teamID, year)
+            input = gets.chomp
+          end
+        end
+      end
+    end
+  end
+
+  def team_slugging_percentage teamID, year
+    stats = BattingStat.where(:year => year, :team => teamID)
+    if stats.count > 0
+      at_bats = hits = doubles = triples = home_runs = 0
+      stats.each do |stat|
+        at_bats += stat.at_bats.to_i
+        hits += stat.hits.to_i
+        doubles += stat.doubles.to_i
+        triples += stat.triples.to_i
+        home_runs += stat.home_runs.to_i
+      end
+      slugging_percentage = ((((hits - (doubles + triples + home_runs)) + (2 * doubles) + (3 * triples) + (4 * home_runs)).to_f / at_bats.to_f) * 100).round(2)
+      slugging_percentage
+    else
+      nil
     end
   end
 

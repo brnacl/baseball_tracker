@@ -45,5 +45,31 @@ class TestController < BaseballTest
     player = @controller.most_improved_player(2008,2009)
     assert_equal true, player.is_a?(Player)
   end
+
+  def test_most_improved_returns_nil_if_no_stats
+    player = @controller.most_improved_player(2007,2009)
+    assert_equal nil, player
+  end
+
+  def test_most_improved_returns_player
+    BattingStat.create(player_id: "abreubo01", year: 2009, league: "AL", team: "LAA", games: 152, at_bats: 563, runs_scored: 96, hits: 165, doubles: 29, triples: 3, home_runs: 15, runs_batted_in: 103, stolen_bases: 30, caught_stealing: 8)
+    BattingStat.create(player_id: "abreubo01", year: 2008, league: "AL", team: "NYA", games: 156, at_bats: 609, runs_scored: 100, hits: 180, doubles: 39, triples: 4, home_runs: 20, runs_batted_in: 100, stolen_bases: 22, caught_stealing: 11)
+    Player.create(player_id: "abreubo01", birth_year: 1974, first_name: "Bobby", last_name: "Abreu")
+    player = @controller.most_improved_player(2008,2009)
+    assert_equal true, player.is_a?(Player)
+  end
+
+  def test_team_slugging_percentage_returns_nil_if_no_stats
+    percentage = @controller.team_slugging_percentage("OAK",2008)
+    assert_equal nil, percentage
+  end
+
+  def test_team_slugging_percentage_returns_float
+    BattingStat.create(player_id: "abreubo01", year: 2008, league: "AL", team: "NYA", games: 156, at_bats: 609, runs_scored: 100, hits: 180, doubles: 39, triples: 4, home_runs: 20, runs_batted_in: 100, stolen_bases: 22, caught_stealing: 11)
+    BattingStat.create(player_id: "abreubo01", year: 2008, league: "AL", team: "NYA", games: 156, at_bats: 609, runs_scored: 100, hits: 180, doubles: 39, triples: 4, home_runs: 20, runs_batted_in: 100, stolen_bases: 22, caught_stealing: 11)
+    BattingStat.create(player_id: "abreubo01", year: 2008, league: "AL", team: "NYA", games: 156, at_bats: 609, runs_scored: 100, hits: 180, doubles: 39, triples: 4, home_runs: 20, runs_batted_in: 100, stolen_bases: 22, caught_stealing: 11)
+    percentage = @controller.team_slugging_percentage("NYA",2008)
+    assert_equal true, percentage.is_a?(Float)
+  end
   
 end

@@ -92,4 +92,20 @@ class TestTemplate < BaseballTest
         assert_in_output out.string, "FILE IMPORTED SUCCESSFULLY", "EXIT"
     end
 
+    def test_message_most_improved_success
+        player = Player.create(player_id: "abreubo01", birth_year: 1974, first_name: "Bobby", last_name: "Abreu")
+        out = capture_stdout do
+          @template.message_most_improved_success(player, "2007", "2008")
+        end
+        assert_in_output out.string, "PLAYER FOUND!", "Name", "Average", "Improvement", "EXIT"
+    end
+
+    def test_message_slugging_percentage_success
+        percentage = 60.45
+        out = capture_stdout do
+          @template.message_slugging_percentage_success(percentage, "OAK", 2007)
+        end
+        assert_in_output out.string, "SLUGGING PERCENTAGE CALCULATED!", "Percentage", "Team ID", "EXIT"
+    end
+
 end
