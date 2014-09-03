@@ -137,4 +137,15 @@ class TestBattingStat < BaseballTest
     assert batting_stat1 == batting_stat2
   end
 
+  def test_player_is_a_player
+    player1 = Player.create(player_id: "abreubo01", birth_year: 1974, first_name: "Bobby", last_name: "Abreu")
+    batting_stat = BattingStat.create(player_id: "abreubo01", year: 2009, league: "AL", team: "LAA", games: 152, at_bats: 563, runs_scored: 96, hits: 165, doubles: 29, triples: 3, home_runs: 15, runs_batted_in: 103, stolen_bases: 30, caught_stealing: 8)
+    assert_equal true, batting_stat.player.is_a?(Player)
+  end
+
+  def test_player_returns_nil_if_not_found
+    batting_stat = BattingStat.create(player_id: "abreubo01", year: 2009, league: "AL", team: "LAA", games: 152, at_bats: 563, runs_scored: 96, hits: 165, doubles: 29, triples: 3, home_runs: 15, runs_batted_in: 103, stolen_bases: 30, caught_stealing: 8)
+    assert_equal nil, batting_stat.player
+  end
+
 end

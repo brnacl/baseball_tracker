@@ -127,4 +127,36 @@ class TestPlayer < BaseballTest
     assert player1 == player2
   end
 
+  def test_batting_average
+    BattingStat.create(player_id: "abreubo01", year: 2009, league: "AL", team: "LAA", games: 152, at_bats: 563, runs_scored: 96, hits: 165, doubles: 29, triples: 3, home_runs: 15, runs_batted_in: 103, stolen_bases: 30, caught_stealing: 8)
+    player1 = Player.create(player_id: "abreubo01", birth_year: 1974, first_name: "Bobby", last_name: "Abreu")
+    average = player1.batting_average(2009)
+    refute_nil average, "Player batting average shouldn't be nil"
+    assert_operator average, :>=, 0
+  end
+
+  def test_batting_average_returns_zero_for_year_not_played
+    player1 = Player.create(player_id: "abreubo01", birth_year: 1974, first_name: "Bobby", last_name: "Abreu")
+    average = player1.batting_average(2009)
+    refute_nil average, "Player batting average shouldn't be nil"
+    assert_equal average, 0
+  end
+
+  def test_improvement
+    BattingStat.create(player_id: "abreubo01", year: 2009, league: "AL", team: "LAA", games: 152, at_bats: 563, runs_scored: 96, hits: 165, doubles: 29, triples: 3, home_runs: 15, runs_batted_in: 103, stolen_bases: 30, caught_stealing: 8)
+    BattingStat.create(player_id: "abreubo01", year: 2008, league: "AL", team: "NYA", games: 156, at_bats: 609, runs_scored: 100, hits: 180, doubles: 39, triples: 4, home_runs: 20, runs_batted_in: 100, stolen_bases: 22, caught_stealing: 11)
+    BattingStat.create(player_id: "abreubo01", year: 2007, league: "AL", team: "NYA", games: 158, at_bats: 605, runs_scored: 123, hits: 171, doubles: 40, triples: 5, home_runs: 16, runs_batted_in: 101, stolen_bases: 25, caught_stealing: 8)
+    player1 = Player.create(player_id: "abreubo01", birth_year: 1974, first_name: "Bobby", last_name: "Abreu")
+    improvement = player1.improvement(2007, 2009)
+    refute_nil improvement, "Player batting average shouldn't be nil"
+    assert_operator improvement, :>=, 0
+  end
+
+  def test_improvement_returns_zero_for_years_not_played
+    player1 = Player.create(player_id: "abreubo01", birth_year: 1974, first_name: "Bobby", last_name: "Abreu")
+    improvement = player1.improvement(2007, 2009)
+    refute_nil improvement, "Player batting average shouldn't be nil"
+    assert_operator improvement, :>=, 0
+  end
+
 end

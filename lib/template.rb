@@ -42,6 +42,7 @@ class Template
     menu = "\nGET MOST IMPROVED AVERAGE > "
     menu << exit_message
     menu << "\n\n"
+    menu << green("Enter Year Range Between 2007 & 2012 (#{purple('YYYY, YYYY')}#{green('):')}")
     puts menu
   end
 
@@ -91,8 +92,8 @@ class Template
     puts message
   end
 
-  def most_improved player, year1, year2
-    puts green("MOST IMPROVED PLAYER\n")
+  def message_most_improved_success player, year1, year2
+    puts green("PLAYER FOUND!\n")
     puts "\s\s\sName: #{player.first_name} #{player.last_name}"
     puts "\s\s\s#{year1} Average: #{player.batting_average(year1.to_i)}"
     puts "\s\s\s#{year2} Average: #{player.batting_average(year2.to_i)}"

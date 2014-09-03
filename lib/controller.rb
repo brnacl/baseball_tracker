@@ -8,24 +8,37 @@ class Controller
 
   def get_improved_average
     input = ""
-    year1 = ""
-    year2 = ""
     until input.upcase == "EXIT"
       @template.header_main
       @template.menu_improved_average
-      puts "Enter Start Year (Between 2007 & 2012):"
-      input = year1 = gets.chomp
-      
-      puts "Enter End Year (Between 2007 & 2012):"
-      input = year2 = gets.chomp
-      if year1.to_i > 0 && year2.to_i > 0
-        player = BattingStat.most_improved(year1.to_i, year2.to_i)
-        @template.most_improved(player, year1, year2)
-        input = gets.chomp
+      input = gets.chomp
+      if input.include?(",")
+        years = input.split(",")
+        years.each {|y| 
+          y.chomp!
+          y.lstrip!
+        }
+        if years.count == 2 && years[0].to_i >= 2007 && years[1].to_i > 2007
+          player = most_improved_player(years[0].to_i, years[1].to_i)
+          @template.message_most_improved_success(player, years[0], years[1])
+          input = gets.chomp
+        end
       end
-      
-      
     end
+  end
+
+  def most_improved_player year1, year2
+    stats = BattingStat.where(:year => year1, :year => year2).where("at_bats >= 200")
+    players = []
+    stats.each do |stat|
+      if !players.any? {|h| h[:player_id] == stat.player_id}
+        players << stat.player
+      end
+    end
+    most_improved_player = players.max_by do |player|
+      player.improvement year1, year2
+    end
+    most_improved_player || nil
   end
 
   def get_slugging_percentage
