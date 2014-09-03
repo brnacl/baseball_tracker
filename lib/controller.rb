@@ -8,17 +8,23 @@ class Controller
 
   def get_improved_average
     input = ""
+    year1 = ""
+    year2 = ""
     until input.upcase == "EXIT"
       @template.header_main
       @template.menu_improved_average
       puts "Enter Start Year (Between 2007 & 2012):"
-      year1 = gets.to_i
+      input = year1 = gets.chomp
+      
       puts "Enter End Year (Between 2007 & 2012):"
-      year2 = gets.to_i
-      player = BattingStat.most_improved(year1.to_i, year2.to_i)
-      @template.most_improved(player, year1, year2)
-      puts "Type Exit"
-      input = gets.chomp
+      input = year2 = gets.chomp
+      if year1.to_i > 0 && year2.to_i > 0
+        player = BattingStat.most_improved(year1.to_i, year2.to_i)
+        @template.most_improved(player, year1, year2)
+        input = gets.chomp
+      end
+      
+      
     end
   end
 

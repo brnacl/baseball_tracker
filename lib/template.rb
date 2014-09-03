@@ -40,25 +40,29 @@ class Template
 
   def menu_improved_average
     menu = "\nGET MOST IMPROVED AVERAGE > "
-    menu << "(Type '" + red("EXIT") + "' to exit)\n\n"
+    menu << exit_message
+    menu << "\n\n"
     puts menu
   end
 
   def menu_slugging_percentage
     menu = "\nGET SLUGGING PERCENTAGE > "
-    menu << "(Type '" + red("EXIT") + "' to exit)\n\n"
+    menu << exit_message
+    menu << "\n\n"
     puts menu
   end
 
   def menu_import_players
     menu = "\nIMPORT PLAYERS > "
-    menu << "(Type '" + red("EXIT") + "' to exit)\n\n"
+    menu << exit_message
+    menu << "\n\n"
     puts menu
   end
 
   def menu_import_stats
     menu = "\nIMPORT BATTING STATS > "
-    menu << "(Type '" + red("EXIT") + "' to exit)\n\n"
+    menu << exit_message
+    menu << "\n\n"
     puts menu
   end
 
@@ -83,7 +87,7 @@ class Template
 
   def message_import_success
     message = yellow("FILE IMPORTED SUCCESSFULLY!\n")
-    message << "Please '" + red("EXIT") + "'" 
+    message << exit_message
     puts message
   end
 
@@ -93,5 +97,10 @@ class Template
     puts "\s\s\s#{year1} Average: #{player.batting_average(year1.to_i)}"
     puts "\s\s\s#{year2} Average: #{player.batting_average(year2.to_i)}"
     puts "\s\s\sImprovement: #{player.improvement(year1.to_i, year2.to_i)}\n\n"
+    puts exit_message
+  end
+
+  def exit_message
+    "Type #{red('EXIT')} to go back"
   end
 end
