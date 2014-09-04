@@ -108,4 +108,13 @@ class TestTemplate < BaseballTest
         assert_in_output out.string, "SLUGGING PERCENTAGE CALCULATED!", "Percentage", "Team ID", "EXIT"
     end
 
+    def test_message_triple_crown_winners
+        winner_al = Player.create(player_id: "abreubo01", birth_year: 1974, first_name: "Bobby", last_name: "Abreu")
+        winner_nl = Player.create(player_id: "abreubo01", birth_year: 1974, first_name: "Bobby", last_name: "Abreu")
+        out = capture_stdout do
+          @template.message_triple_crown_winners(2007, winner_al, winner_nl)
+        end
+        assert_in_output out.string, "TRIPLE CROWN WINNERS", "American League", "National League", "EXIT"
+    end
+
 end

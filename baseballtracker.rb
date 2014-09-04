@@ -23,8 +23,10 @@ until command == 0
   when 2
     controller.get_slugging_percentage
   when 3
-    controller.import_csv "players"
+    controller.get_triple_crown_winners
   when 4
+    controller.import_csv "players"
+  when 5
     controller.import_csv "stats"
   end
 end

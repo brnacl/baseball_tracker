@@ -14,10 +14,10 @@ class Controller
       input = gets.chomp
       if input.include?(",")
         years = input.split(",")
-        years.each {|y| 
+        years.each do |y| 
           y.chomp!
           y.lstrip!
-        }
+        end
         if years.count == 2 && years[0].to_i.between?(2007,2012) && years[1].to_i.between?(2007,2012)
           year1 = years[0].to_i
           year2 = years[1].to_i
@@ -53,10 +53,10 @@ class Controller
       input = gets.chomp
       if input.include?(",")
         params = input.split(",")
-        params.each {|p|
+        params.each do |p|
           p.chomp!
           p.lstrip!
-        }
+        end
         if params.count == 2 && params[0].length == 3 && params[1].to_i.between?(2007,2012)
           teamID = params[0]
           year = params[1].to_i
@@ -83,6 +83,44 @@ class Controller
       end
       slugging_percentage = ((((hits - (doubles + triples + home_runs)) + (2 * doubles) + (3 * triples) + (4 * home_runs)).to_f / at_bats.to_f) * 100).round(2)
       slugging_percentage
+    else
+      nil
+    end
+  end
+
+  def get_triple_crown_winners
+    input = ""
+    until input.upcase == "EXIT"
+      @template.header_main
+      @template.menu_triple_crown_winners
+      input = gets.to_i
+      
+      if input.between?(2007,2012)
+        winner_al = triple_crown_winner(input, "AL")
+        winner_nl = triple_crown_winner(input, "NL")
+        @template.message_triple_crown_winners(input, winner_al, winner_nl)
+        input = gets.chomp
+      end
+      
+    end
+  end
+
+  def triple_crown_winner year, league
+    stats = BattingStat.where(:year => year, :league => league).where("at_bats >= 400")
+    highest_average = stats.max_by do |stat|
+      stat.player.batting_average(year)
+    end
+    most_rbis = stats.max_by do |stat|
+      stat.runs_batted_in
+    end
+    most_home_runs = stats.max_by do |stat|
+      stat.home_runs
+    end
+    if highest_average && most_rbis && most_home_runs
+      if highest_average.player_id == most_rbis.player_id && most_rbis.player_id == most_home_runs.player_id
+        winner = Player.where(:player_id => highest_average.player_id).first
+      end
+      winner
     else
       nil
     end

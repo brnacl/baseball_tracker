@@ -16,7 +16,7 @@ class Template
     header = artii.asciify("baseball_STATS")
     header << "\n"
     header << "=" * ((header.length / 5) - 15)
-    puts blue(header)
+    puts purple(header)
   end
 
   def colorize(text, color_code)
@@ -33,12 +33,13 @@ class Template
   def white(text); colorize(text, 37); end
 
   def menu_main
-    menu = "\nMAIN MENU > "
-    menu << green("1")+"(Get Most Improved Batting Average)\s"
-    menu << green("2")+"(Get Team Slugging Percentage)\s"
-    menu << green("3")+"(Import Player Data)\s"
-    menu << green("4")+"(Import Batting Stats)\s"
-    menu << red("0")+"(Quit)\n\n"
+    menu = "\nMAIN MENU >\n"
+    menu << green("1")+"\s(Get Most Improved Batting Average)\n"
+    menu << green("2")+"\s(Get Team Slugging Percentage)\n"
+    menu << green("3")+"\s(Get Triple Crown Winners)\n"
+    menu << green("4")+"\s(Import Player Data)\n"
+    menu << green("5")+"\s(Import Batting Stats)\n"
+    menu << red("0")+"\s(Quit)\n\n"
     puts menu
   end
 
@@ -55,6 +56,14 @@ class Template
     menu << exit_message
     menu << "\n\n"
     menu << green("Enter TeamID and Year (#{purple('OAK, 2007')}#{green('):')}")
+    puts menu
+  end
+
+  def menu_triple_crown_winners
+    menu = "\nGET TRIPLE CROWN WINNERS > "
+    menu << exit_message
+    menu << "\n\n"
+    menu << green("Enter Year Between 2007 & 2012 (#{purple('2007')}#{green('):')}")
     puts menu
   end
 
@@ -110,6 +119,14 @@ class Template
     puts green("SLUGGING PERCENTAGE CALCULATED!\n")
     puts "\s\s\sTeam ID: #{teamID}"
     puts "\s\s\s#{year} Percentage: #{percentage}%\n\n"
+    puts exit_message
+  end
+
+  def message_triple_crown_winners year, winner_al, winner_nl
+    puts green("TRIPLE CROWN WINNERS:\n")
+    puts "\s\s\sYear: #{yellow(year)}"
+    puts "\s\s\sAmerican League: #{winner_al ? yellow(winner_al.first_name + ' ' + winner_al.last_name + '!!') : red('NO WINNER')}\n"
+    puts "\s\s\sNational League: #{winner_nl ? yellow(winner_nl.first_name + ' ' + winner_nl.last_name + '!!') : red('NO WINNER')}\n\n"
     puts exit_message
   end
 

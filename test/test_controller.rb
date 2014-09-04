@@ -71,5 +71,16 @@ class TestController < BaseballTest
     percentage = @controller.team_slugging_percentage("NYA",2008)
     assert_equal true, percentage.is_a?(Float)
   end
-  
+
+  def test_team_slugging_percentage_returns_nil_if_no_winner
+    BattingStat.create(player_id: "abreubo01", year: 2012, league: "AL", team: "LAA", games: 10, at_bats: 100, runs_scored: 10, hits: 180, doubles: 39, triples: 4, home_runs: 0, runs_batted_in: 0, stolen_bases: 22, caught_stealing: 11)
+    BattingStat.create(player_id: "abreuto01", year: 2012, league: "AL", team: "KCA", games: 10, at_bats: 100, runs_scored: 0, hits: 0, doubles: 39, triples: 4, home_runs: 20, runs_batted_in: 0, stolen_bases: 22, caught_stealing: 11)
+    BattingStat.create(player_id: "allenbr01", year: 2012, league: "AL", team: "TBA", games: 10, at_bats: 100, runs_scored: 0, hits: 0, doubles: 39, triples: 4, home_runs: 0, runs_batted_in: 20, stolen_bases: 22, caught_stealing: 11)
+    Player.create(player_id: "abreubo01", birth_year: 1974, first_name: "Bobby", last_name: "Abreu")
+    Player.create(player_id: "abreuto01", birth_year: 1984, first_name: "Tony", last_name: "Abreu")
+    Player.create(player_id: "allenbr01", birth_year: 1986, first_name: "Brandon", last_name: "Allen")
+    winner = @controller.triple_crown_winner(2012,"AL")
+    assert_equal nil, winner
+  end
+    
 end
