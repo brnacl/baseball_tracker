@@ -8,7 +8,6 @@ Dir["models/*.rb"].each {|file| require_relative file }
 Environment.environment = "production"
 Environment.connect_to_database
 
-# whatever
 template = Template.new
 controller = Controller.new(template)
 
